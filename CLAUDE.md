@@ -21,6 +21,14 @@ yarn workspace @repo/ui lint
 yarn workspace web check-types
 ```
 
+For the mobile app specifically:
+
+```bash
+yarn workspace mini-vault start    # Start Expo dev server
+yarn workspace mini-vault ios      # Run on iOS simulator
+yarn workspace mini-vault android  # Run on Android emulator
+```
+
 There is no test framework configured in this repo yet.
 
 ## Architecture
@@ -33,8 +41,9 @@ This is a **Turborepo + Yarn Workspaces** monorepo. Task dependencies are declar
 |-----|------|-------------|
 | `apps/web` | 3000 | Main Next.js application |
 | `apps/docs` | 3001 | Documentation Next.js application |
+| `apps/mobile` | N/A | Expo Router mobile app (iOS & Android) |
 
-Both apps consume shared packages via workspace imports (e.g., `@repo/ui`).
+The web and docs apps consume shared packages via workspace imports (e.g., `@repo/ui`). The mobile app uses Expo-specific tooling and does not consume `@repo/ui`.
 
 ### Shared Packages
 
