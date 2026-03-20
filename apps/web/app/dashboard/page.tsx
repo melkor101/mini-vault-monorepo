@@ -1,11 +1,9 @@
-import { MINIATURES } from '@/lib/mock-data';
+import { MINIATURES, REWARD } from '@/lib/mock-data';
 import { CollectionHeroCard } from '@/components/collection-hero-card/collection-hero-card';
 import { StatCard } from '@/components/stat-card/stat-card';
 import { StatusDonut } from '@/components/status-donut/status-donut';
 import { PaintingPipeline } from '@/components/painting-pipeline/painting-pipeline';
-import { ProgressMetrics } from '@/components/progress-metrics/progress-metrics';
-import { WeeklyStatCard } from '@/components/weekly-stat-card/weekly-stat-card';
-import { RecentActivityList } from '@/components/recent-activity-list/recent-activity-list';
+import { Fab } from '@/components/fab/fab';
 
 export default function DashboardPage() {
   const total = MINIATURES.length;
@@ -19,24 +17,29 @@ export default function DashboardPage() {
     { label: 'Completed', value: completed, color: '#4CAF50' },
     { label: 'In Progress', value: inProgress, color: '#4B7BEC' },
     { label: 'Primed', value: primed, color: '#FF9500' },
-    { label: 'Unpainted', value: unpainted, color: '#9E9E9E' },
   ];
 
-  const metrics = [
-    { label: 'Completed', value: completed, total, color: '#4CAF50' },
-    { label: 'In Progress', value: inProgress, total, color: '#4B7BEC' },
-    { label: 'Primed', value: primed, total, color: '#FF9500' },
+  const statusGrid = [
+    { label: 'Completed', value: completed, color: '#4CAF50' },
+    { label: 'In Progress', value: inProgress, color: '#4B7BEC' },
+    { label: 'Unpainted', value: unpainted, color: '#9E9E9E' },
+    { label: 'Primed', value: primed, color: '#FF9500' },
   ];
 
   return (
     <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">Dashboard</h1>
-        <p className="text-sm text-[#888888]">Your painting progress at a glance</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-[#1A1A2E]">Dashboard</h1>
+          <p className="text-sm text-[#888888]">Your painting progress at a glance</p>
+        </div>
+        <button className="px-4 py-2 rounded-lg border border-[#EFEFEF] bg-white text-sm font-medium text-[#1A1A2E] hover:bg-[#F5F6FA] transition-colors">
+          Mark as Completed
+        </button>
       </div>
 
       <div className="grid grid-cols-2 gap-4 items-stretch">
-        <CollectionHeroCard total={total} painted={completed} inProgress={inProgress} />
+        <CollectionHeroCard total={total} completed={completed} inProgress={inProgress} primed={primed} />
         <div className="flex flex-col gap-4">
           <StatCard
             title="Completed"
@@ -76,39 +79,58 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-[#EFEFEF] p-4">
-        <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Progress Metrics</h3>
-        <ProgressMetrics metrics={metrics} />
-      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="bg-white rounded-xl border border-[#EFEFEF] p-4">
+          <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Status Overview</h3>
+          <div className="grid grid-cols-2 gap-3">
+            {statusGrid.map((s) => {
+              const pct = total > 0 ? Math.round((s.value / total) * 100) : 0;
+              return (
+                <div key={s.label} className="p-3 rounded-lg bg-[#F5F6FA]">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
+                      <span className="text-xs text-[#888888]">{s.label}</span>
+                    </div>
+                    <span className="text-sm font-bold text-[#1A1A2E]">{s.value}</span>
+                  </div>
+                  <div className="h-1.5 bg-white rounded-full overflow-hidden">
+                    <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: s.color }} />
+                  </div>
+                  <p className="text-xs text-[#888888] mt-1">{pct}%</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        <WeeklyStatCard
-          icon="🎨"
-          title="This Week"
-          count={1}
-          subtitle="miniatures painted"
-          gradient={['#6C63FF', '#4B3FBF']}
-        />
-        <WeeklyStatCard
-          icon="⚡"
-          title="Streak"
-          count={3}
-          subtitle="days painting"
-          gradient={['#FF9500', '#E65100']}
-        />
-        <WeeklyStatCard
-          icon="🏆"
-          title="Total XP"
-          count={950}
-          subtitle="experience points"
-          gradient={['#4CAF50', '#2E7D32']}
-        />
+        <div className="bg-white rounded-xl border border-[#EFEFEF] p-4">
+          <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Achievements</h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 rounded-lg bg-[#F5F6FA]">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-[#6C63FF]/10 flex items-center justify-center text-lg">🎨</div>
+                <div>
+                  <p className="text-xs text-[#888888]">Miniatures painted</p>
+                  <p className="text-xs text-[#888888]">{total > 0 ? Math.round((completed / total) * 100) : 0}%</p>
+                </div>
+              </div>
+              <p className="text-2xl font-bold text-[#1A1A2E]">{completed}</p>
+            </div>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-[#F5F6FA]">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-[#FF9500]/10 flex items-center justify-center text-lg">🏆</div>
+                <div>
+                  <p className="text-xs text-[#888888]">Total XP</p>
+                  <p className="text-xs text-[#888888]">XP</p>
+                </div>
+              </div>
+              <p className="text-2xl font-bold text-[#1A1A2E]">{REWARD.xp}</p>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div className="bg-white rounded-xl border border-[#EFEFEF] p-4">
-        <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3">Recent Activity</h3>
-        <RecentActivityList miniatures={MINIATURES} />
-      </div>
+      <Fab href="/add" />
     </div>
   );
 }

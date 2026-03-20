@@ -4,11 +4,51 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV_ITEMS = [
-  { href: '/dashboard', icon: '🏠', label: 'Dashboard' },
-  { href: '/collection', icon: '📚', label: 'Collection' },
-  { href: '/add', icon: '➕', label: 'Add' },
-  { href: '/boxes', icon: '📦', label: 'Boxes' },
-  { href: '/rewards', icon: '🏆', label: 'Rewards' },
+  {
+    href: '/dashboard',
+    label: 'Dashboard',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    ),
+  },
+  {
+    href: '/collection',
+    label: 'Collection',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+    ),
+  },
+  {
+    href: '/boxes',
+    label: 'Boxes',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+        <line x1="12" y1="22.08" x2="12" y2="12"/>
+      </svg>
+    ),
+  },
+  {
+    href: '/rewards',
+    label: 'Rewards',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+        <path d="M4 22h16"/>
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 19.75 7 21.23 7 23"/>
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 19.75 17 21.23 17 23"/>
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+      </svg>
+    ),
+  },
 ];
 
 export function Sidebar() {
@@ -20,10 +60,10 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="w-60 border-r border-[#EFEFEF] bg-white flex flex-col h-screen fixed left-0 top-0">
-      <div className="p-6 border-b border-[#EFEFEF]">
-        <h1 className="text-xl font-bold text-[#1A1A2E]">Mini Vault</h1>
-        <p className="text-sm text-[#888888]">Collection Tracker</p>
+    <aside className="w-60 bg-[#1A1A2E] flex flex-col h-screen fixed left-0 top-0">
+      <div className="p-6 border-b border-white/10">
+        <h1 className="text-xl font-bold text-white">Mini Vault</h1>
+        <p className="text-sm text-white/40">Collection Tracker</p>
       </div>
       <nav className="flex-1 p-4">
         <ul className="space-y-1">
@@ -34,16 +74,23 @@ export function Sidebar() {
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive(item.href)
                     ? 'bg-[#6C63FF] text-white'
-                    : 'text-[#1A1A2E] hover:bg-[#F5F6FA]'
+                    : 'text-white/60 hover:text-white hover:bg-white/10'
                 }`}
               >
-                <span>{item.icon}</span>
+                {item.icon}
                 <span>{item.label}</span>
               </Link>
             </li>
           ))}
         </ul>
       </nav>
+      <div className="p-4 border-t border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-[#6C63FF] flex items-center justify-center text-white text-sm font-semibold">
+            N
+          </div>
+        </div>
+      </div>
     </aside>
   );
 }

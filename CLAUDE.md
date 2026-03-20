@@ -73,9 +73,15 @@ Shared lib files:
 - `lib/theme.ts` — `AppColors` const with brand colors and per-status colors; use this for all color values
 - `lib/miniature-options.ts` — `TYPE_OPTIONS`, `BRAND_OPTIONS`, `PAINT_STATUS_OPTIONS`, `STORAGE_BOX_OPTIONS`; use these in all forms
 
-**Routes:** `/` (landing) → `/dashboard`, `/collection`, `/collection/[id]`, `/add`, `/boxes`, `/boxes/[id]`, `/rewards`
+**Routes:** `/` redirects to `/dashboard`. Active routes: `/dashboard`, `/collection`, `/collection/[id]`, `/add`, `/boxes`, `/boxes/[id]`, `/rewards`
 
 **Components** follow the same folder convention as mobile: `components/my-component/my-component.tsx`. The sidebar layout lives at `components/layout/sidebar.tsx` and wraps all main pages via `app/layout.tsx`.
+
+**Component exports:** Use named `export function ComponentName` for components. Route pages use `export default async function PageName`. Only add `'use client'` when the component uses hooks or browser APIs.
+
+**Icons:** Inline SVGs are used throughout — do not introduce an icon library.
+
+**Design references:** `apps/web/design/` contains reference screenshots (e.g. `dashbord.png`) — consult these when building or modifying UI.
 
 ### Mobile App (`apps/mobile`)
 
@@ -87,6 +93,7 @@ Key mobile conventions (abbreviated):
 - **File structure:** `components/my-component/my-component.tsx` + `my-component.styles.ts`. Route screens: `app/(tabs)/screen-name/index.tsx` + `screen-name.styles.ts`.
 - **Platform files:** `.ios.tsx` / `.web.ts` variants are resolved automatically by Expo.
 - **Path alias:** `@/` maps to the project root.
+- **Inline objects:** Object literals passed to non-`style` props (e.g. `options={{ headerShown: false }}`) must be extracted to named constants at the top of the file, not written inline.
 
 ### Commit Messages
 

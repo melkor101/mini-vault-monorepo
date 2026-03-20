@@ -7,7 +7,7 @@ export function MiniatureCard({ mini }: { mini: Miniature }) {
     <Link href={`/collection/${mini.id}`} className="block">
       <div className="bg-white rounded-xl border border-[#EFEFEF] overflow-hidden hover:shadow-md transition-shadow">
         <div
-          className="h-32 w-full"
+          className="h-40 w-full"
           style={{
             background: `linear-gradient(135deg, ${mini.thumbnailColors[0]}, ${mini.thumbnailColors[1] ?? mini.thumbnailColors[0]})`,
           }}

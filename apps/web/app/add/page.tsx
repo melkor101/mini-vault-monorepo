@@ -14,15 +14,24 @@ export default function AddPage() {
   const [notes, setNotes] = useState('');
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#1A1A2E]">Add Miniature</h1>
-        <p className="text-sm text-[#888888]">Add a new miniature to your collection</p>
-      </div>
+    <div className="p-8 flex justify-center">
+      <div className="bg-white rounded-xl border border-[#EFEFEF] p-8 w-full max-w-2xl">
+        <div className="flex items-start justify-between mb-6">
+          <div>
+            <h1 className="text-2xl font-bold text-[#1A1A2E]">Add Miniature</h1>
+            <p className="text-sm text-[#888888]">Add a new miniature to your collection</p>
+          </div>
+          <button type="button" className="text-[#888888] hover:text-[#1A1A2E] transition-colors mt-1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </button>
+        </div>
 
-      <div className="bg-white rounded-xl border border-[#EFEFEF] p-6 max-w-lg">
         <div className="space-y-4">
-          <FormField label="Name">
+          <FormField label="Name" required>
             <input
               type="text"
               value={name}
@@ -32,7 +41,7 @@ export default function AddPage() {
             />
           </FormField>
 
-          <FormField label="Brand">
+          <FormField label="Brand" required>
             <FormDropdown
               value={brand}
               onChange={setBrand}
@@ -41,7 +50,7 @@ export default function AddPage() {
             />
           </FormField>
 
-          <FormField label="Type">
+          <FormField label="Type" required>
             <FormDropdown
               value={type}
               onChange={setType}
@@ -50,7 +59,7 @@ export default function AddPage() {
             />
           </FormField>
 
-          <FormField label="Status">
+          <FormField label="Status" required>
             <FormDropdown
               value={status}
               onChange={setStatus}
@@ -59,12 +68,12 @@ export default function AddPage() {
             />
           </FormField>
 
-          <FormField label="Storage Box">
+          <FormField label="Storage Box (optional)">
             <FormDropdown
               value={storageBox}
               onChange={setStorageBox}
               options={STORAGE_BOX_OPTIONS}
-              placeholder="Select box (optional)"
+              placeholder="Select box"
             />
           </FormField>
 
