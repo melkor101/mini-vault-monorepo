@@ -23,6 +23,7 @@ export type Miniature = {
   thumbnailColors: [string, string];
   badgeColor: string;
   image: string;
+  gameSystem: string;
 };
 
 export class MiniatureModel extends Model {
@@ -38,6 +39,7 @@ export class MiniatureModel extends Model {
   @field('thumbnail_colors') thumbnailColorsRaw!: string;
   @field('badge_color') badgeColor!: string;
   @field('image') image!: string;
+  @field('game_system') gameSystem!: string;
 
   get thumbnailColors(): [string, string] {
     return JSON.parse(this.thumbnailColorsRaw);
@@ -56,6 +58,7 @@ export class MiniatureModel extends Model {
       thumbnailColors: this.thumbnailColors,
       badgeColor: this.badgeColor,
       image: this.image,
+      gameSystem: this.gameSystem,
     };
   }
 }

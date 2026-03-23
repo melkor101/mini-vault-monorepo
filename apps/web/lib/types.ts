@@ -12,6 +12,7 @@ export interface Miniature {
   thumbnailColors: string[];
   badgeColor: string;
   image?: string;
+  gameSystem?: string;
 }
 
 export interface StorageBox {

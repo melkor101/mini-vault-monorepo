@@ -31,3 +31,11 @@ export const PAINT_STATUS_OPTIONS: { label: string; value: PaintStatusEnum }[] =
 ];
 
 export const STORAGE_BOX_OPTIONS = ['Box A', 'Box B', 'Box C'];
+
+export const GAME_SYSTEM_OPTIONS = [
+  'Warhammer 40,000',
+  'Age of Sigmar',
+  'Dungeons & Dragons',
+  'Kings of War',
+  'Other',
+];

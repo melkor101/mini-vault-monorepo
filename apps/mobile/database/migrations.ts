@@ -20,5 +20,14 @@ export const migrations = schemaMigrations({
         }),
       ],
     },
+    {
+      toVersion: 4,
+      steps: [
+        addColumns({
+          table: 'miniatures',
+          columns: [{ name: 'game_system', type: 'string', isOptional: true }],
+        }),
+      ],
+    },
   ],
 });

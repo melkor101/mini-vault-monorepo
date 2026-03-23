@@ -12,6 +12,7 @@ export const MINIATURES: Miniature[] = [
     lastUpdated: '2026-03-10',
     thumbnailColors: ['#4B7BEC', '#2C3E70', '#C0C0C0'],
     badgeColor: '#4CAF50',
+    gameSystem: 'Warhammer 40,000',
   },
   {
     id: 'mini-2',
@@ -24,6 +25,7 @@ export const MINIATURES: Miniature[] = [
     lastUpdated: '2026-03-15',
     thumbnailColors: ['#4CAF50', '#8B4513', '#808080'],
     badgeColor: '#4B7BEC',
+    gameSystem: 'Warhammer 40,000',
   },
   {
     id: 'mini-3',
@@ -36,6 +38,7 @@ export const MINIATURES: Miniature[] = [
     lastUpdated: '2026-03-12',
     thumbnailColors: ['#CC0000', '#FFD700', '#333333'],
     badgeColor: '#FF9500',
+    gameSystem: 'Dungeons & Dragons',
   },
 ];
 

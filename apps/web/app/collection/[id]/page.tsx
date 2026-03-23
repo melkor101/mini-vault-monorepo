@@ -76,6 +76,13 @@ export default async function MiniatureDetailPage({ params }: { params: Promise<
             </div>
           </div>
 
+          {mini.gameSystem && (
+            <div className="bg-[#F5F6FA] rounded-lg p-3">
+              <p className="text-xs text-[#888888] mb-0.5">Game System</p>
+              <p className="text-sm font-semibold text-[#1A1A2E]">{mini.gameSystem}</p>
+            </div>
+          )}
+
           {mini.notes && (
             <div className="bg-[#F5F6FA] rounded-lg p-3">
               <p className="text-xs text-[#888888] mb-0.5">Notes</p>

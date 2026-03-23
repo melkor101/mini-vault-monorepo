@@ -7,6 +7,13 @@ export const PAINT_STATUS_OPTIONS = [
   { value: 'inProgress', label: 'In Progress' },
   { value: 'completed', label: 'Completed' },
 ];
+export const GAME_SYSTEM_OPTIONS = [
+  'Warhammer 40,000',
+  'Age of Sigmar',
+  'Dungeons & Dragons',
+  'Kings of War',
+  'Other',
+];
 export const STORAGE_BOX_OPTIONS = [
   { value: 'box-a', label: 'Box A' },
   { value: 'box-b', label: 'Box B' },

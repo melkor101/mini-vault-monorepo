@@ -91,6 +91,12 @@ const MiniatureDetailScreen = () => {
               <Text style={miniatureDetailStyles.detailCellLabel}>📅 Last Updated</Text>
               <Text style={miniatureDetailStyles.detailCellValue}>{miniature.lastUpdated}</Text>
             </View>
+            {miniature.gameSystem ? (
+              <View style={miniatureDetailStyles.detailCell}>
+                <Text style={miniatureDetailStyles.detailCellLabel}>Game System</Text>
+                <Text style={miniatureDetailStyles.detailCellValue}>{miniature.gameSystem}</Text>
+              </View>
+            ) : null}
           </View>
         </View>
       </ScrollView>
