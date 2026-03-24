@@ -1,11 +1,15 @@
+'use client';
+
+import { useState } from 'react';
 import { MINIATURES, REWARD } from '@/lib/mock-data';
 import { CollectionHeroCard } from '@/components/collection-hero-card/collection-hero-card';
 import { StatCard } from '@/components/stat-card/stat-card';
 import { StatusDonut } from '@/components/status-donut/status-donut';
 import { PaintingPipeline } from '@/components/painting-pipeline/painting-pipeline';
-import { Fab } from '@/components/fab/fab';
+import { AddMiniatureModal } from '@/components/add-miniature-modal/add-miniature-modal';
 
 export default function DashboardPage() {
+  const [showModal, setShowModal] = useState(false);
   const total = MINIATURES.length;
   const completed = MINIATURES.filter((m) => m.status === 'completed').length;
   const inProgress = MINIATURES.filter((m) => m.status === 'inProgress').length;
@@ -130,7 +134,17 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-      <Fab href="/add" />
+      <button
+        onClick={() => setShowModal(true)}
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#6C63FF] text-white flex items-center justify-center shadow-lg hover:opacity-90 transition-opacity"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+
+      {showModal && <AddMiniatureModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }

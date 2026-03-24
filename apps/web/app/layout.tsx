@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Sidebar } from '@/components/layout/sidebar';
+import { ClientLayout } from '@/components/layout/client-layout';
 
 export const metadata: Metadata = {
   title: 'Mini Vault',
@@ -15,10 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="h-screen overflow-hidden bg-[#F5F6FA]">
-        <Sidebar />
-        <main className="h-full overflow-y-auto pt-14">
-          {children}
-        </main>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

@@ -1,12 +1,37 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { MINIATURES } from '@/lib/mock-data';
+import { createClient } from '@/lib/supabase/server';
 import { StatusPill } from '@/components/status-pill/status-pill';
+import type { PaintStatus } from '@/lib/types';
+
+const STATUS_THUMBNAIL: Record<PaintStatus, string[]> = {
+  backlog: ['#BDBDBD', '#9E9E9E'],
+  unpainted: ['#BDBDBD', '#9E9E9E'],
+  primed: ['#FFB74D', '#FF9500'],
+  inProgress: ['#64B5F6', '#4B7BEC'],
+  completed: ['#81C784', '#4CAF50'],
+};
 
 export default async function MiniatureDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const mini = MINIATURES.find((m) => m.id === id);
-  if (!mini) notFound();
+  const supabase = await createClient();
+  const { data: row } = await supabase.from('miniatures').select('*').eq('id', id).single();
+  if (!row) notFound();
+
+  const status = row.status as PaintStatus;
+  const thumbnailColors: string[] = row.thumbnail_colors?.length ? row.thumbnail_colors : STATUS_THUMBNAIL[status];
+  const mini = {
+    id: row.id,
+    name: row.name,
+    brand: row.brand,
+    type: row.type,
+    status,
+    storageBox: row.storage_box as string | null,
+    notes: row.notes ?? '',
+    lastUpdated: row.last_updated,
+    thumbnailColors,
+    gameSystem: row.game_system as string | undefined,
+  };
 
   return (
     <div className="p-6">
@@ -77,7 +102,7 @@ export default async function MiniatureDetailPage({ params }: { params: Promise<
           </div>
 
           {mini.gameSystem && (
-            <div className="bg-[#F5F6FA] rounded-lg p-3">
+            <div className="bg-[#F5F6FA] rounded-lg p-3 mb-4">
               <p className="text-xs text-[#888888] mb-0.5">Game System</p>
               <p className="text-sm font-semibold text-[#1A1A2E]">{mini.gameSystem}</p>
             </div>

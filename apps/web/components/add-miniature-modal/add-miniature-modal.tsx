@@ -7,7 +7,7 @@ import { FormDropdown } from '@/components/form/form-dropdown';
 import { BRAND_OPTIONS, GAME_SYSTEM_OPTIONS, PAINT_STATUS_OPTIONS, STORAGE_BOX_OPTIONS, TYPE_OPTIONS } from '@/lib/miniature-options';
 import { createClient } from '@/lib/supabase/client';
 
-export default function AddPage() {
+export function AddMiniatureModal({ onClose }: { onClose: () => void }) {
   const router = useRouter();
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
@@ -18,6 +18,12 @@ export default function AddPage() {
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   async function handleAdd() {
     if (!name.trim() || !brand || !type || !status) {
@@ -51,30 +57,15 @@ export default function AddPage() {
       return;
     }
 
-    router.back();
     router.refresh();
+    onClose();
   }
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') router.back(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [router]);
-
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-6"
-      style={{ animation: 'fade-in 0.2s ease-out' }}
-    >
-      <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-        onClick={() => router.back()}
-      />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
-      <div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col"
-        style={{ animation: 'modal-in 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }}
-      >
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#EFEFEF]">
           <div>
             <h1 className="text-xl font-bold text-[#1A1A2E]">Add Miniature</h1>
@@ -82,7 +73,7 @@ export default function AddPage() {
           </div>
           <button
             type="button"
-            onClick={() => router.back()}
+            onClick={onClose}
             className="w-8 h-8 flex items-center justify-center rounded-lg text-[#888888] hover:text-[#1A1A2E] hover:bg-[#F5F6FA] transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -139,22 +130,22 @@ export default function AddPage() {
             <p className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2">{error}</p>
           )}
           <div className="flex gap-3">
-          <button
-            type="button"
-            onClick={handleAdd}
-            disabled={loading}
-            className="flex-1 py-2.5 rounded-lg text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ backgroundColor: '#6C63FF' }}
-          >
-            {loading ? 'Saving…' : 'Add to Collection'}
-          </button>
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="flex-1 py-2.5 rounded-lg border border-[#EFEFEF] text-sm font-medium text-[#888888] hover:text-[#1A1A2E] hover:bg-[#F5F6FA] transition-colors"
-          >
-            Cancel
-          </button>
+            <button
+              type="button"
+              onClick={handleAdd}
+              disabled={loading}
+              className="flex-1 py-2.5 rounded-lg text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ backgroundColor: '#6C63FF' }}
+            >
+              {loading ? 'Saving…' : 'Add to Collection'}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 py-2.5 rounded-lg border border-[#EFEFEF] text-sm font-medium text-[#888888] hover:text-[#1A1A2E] hover:bg-[#F5F6FA] transition-colors"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </div>
