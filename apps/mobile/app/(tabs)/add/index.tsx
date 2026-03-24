@@ -10,6 +10,7 @@ import { addMiniature } from '@/database/miniature-actions';
 import { PaintStatusEnum } from '@/database/models/miniature.model';
 import {
   BRAND_OPTIONS,
+  GAME_SYSTEM_OPTIONS,
   PAINT_STATUS_OPTIONS,
   STORAGE_BOX_OPTIONS,
   TYPE_OPTIONS,
@@ -24,6 +25,7 @@ enum DropdownField {
   Type = 'type',
   Status = 'status',
   StorageBox = 'storageBox',
+  GameSystem = 'gameSystem',
 }
 
 const addMiniatureSchema = z.object({
@@ -32,6 +34,7 @@ const addMiniatureSchema = z.object({
   type: z.string(),
   status: z.nativeEnum(PaintStatusEnum),
   storageBox: z.string(),
+  gameSystem: z.string(),
   notes: z.string(),
 });
 
@@ -45,6 +48,7 @@ const addMiniatureDefaultValues: AddMiniatureForm = {
   type: 'Infantry',
   status: PaintStatusEnum.Backlog,
   storageBox: '',
+  gameSystem: '',
   notes: '',
 };
 
@@ -173,6 +177,23 @@ const AddScreen = () => {
                   placeholder="Select a box"
                   isOpen={openDropdown === DropdownField.StorageBox}
                   onToggle={() => toggleDropdown(DropdownField.StorageBox)}
+                />
+              )}
+            />
+          </FormField>
+
+          <FormField label="Game System">
+            <Controller
+              control={control}
+              name="gameSystem"
+              render={({ field: { value, onChange } }) => (
+                <FormDropdown
+                  options={toOptions(GAME_SYSTEM_OPTIONS)}
+                  value={value}
+                  onChange={makeDropdownOnChange(onChange)}
+                  placeholder="Select a game system"
+                  isOpen={openDropdown === DropdownField.GameSystem}
+                  onToggle={() => toggleDropdown(DropdownField.GameSystem)}
                 />
               )}
             />
